@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as styles from "./index.module.scss";
 import { graphql } from "gatsby";
-import MuxPlayer from "@mux/mux-player-react";
 import { TransitionState } from "gatsby-plugin-transition-link";
 import TLink from "../components/tLink";
 
@@ -32,8 +31,7 @@ export const query = graphql`
 `;
 const IndexPage = ({ data }) => {
   const projects = data?.allNotion.nodes;
-  const muxUserId = data.site.siteMetadata.muxUserId;
-  console.log(projects);
+
   return (
     <>
       {/*<Seo

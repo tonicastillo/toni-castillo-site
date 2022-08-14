@@ -1,0 +1,22 @@
+@import "../../cssConfig/variables";
+@import "../../cssConfig/fonts";
+@import "../../cssConfig/mixins";
+
+html,
+body{
+  font-family: Teletext50Condensed, Courier, sans-serif;
+  text-transform: uppercase;
+  text-shadow: var(--text-shadow1);
+  font-smooth: never;
+  -webkit-font-smoothing: none;
+  font-size: var(--font-size-m);
+  line-height: 1.3em;
+}
+h1,h2,h3,h4,h5,h6{
+  font-size: var(--font-size-m);
+  line-height: 1.3em;
+}
+a{
+  text-decoration: none;
+  color: var(--bColor1);
+}

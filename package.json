@@ -20,7 +20,10 @@
     "@mux/mux-player-react": "^0.1.0-beta.26",
     "@react-three/drei": "^9.19.7",
     "@react-three/fiber": "^8.3.1",
+    "@react-three/flex": "^1.0.0",
     "@react-three/postprocessing": "^2.6.1",
+    "babel-plugin-glsl": "^1.0.0",
+    "classnames": "^2.3.1",
     "dotenv": "^16.0.1",
     "gatsby": "^4.20.0",
     "gatsby-plugin-google-analytics": "^4.20.0",
@@ -31,11 +34,13 @@
     "gatsby-plugin-sharp": "^4.20.0",
     "gatsby-plugin-sitemap": "^5.20.0",
     "gatsby-plugin-transition-link": "^1.20.5",
+    "gatsby-plugin-webfonts": "^2.2.2",
     "gatsby-source-filesystem": "^4.20.0",
     "gatsby-transformer-sharp": "^4.20.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "sass": "^1.54.3"
+    "sass": "^1.54.3",
+    "three": "^0.143.0"
   },
   "devDependencies": {
     "prettier": "2.7.1"

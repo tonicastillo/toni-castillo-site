@@ -1,0 +1,6 @@
+@mixin background1($color1, $color2, $size) {
+  background-image: repeating-conic-gradient(#{$color1} 0% 25%, #{$color2} 0% 50%);
+  background-position: 0 0, #{$size}px #{$size}px;
+  background-size: #{$size*2}px #{$size*2}px;
+  background-color: #{$color2};
+}

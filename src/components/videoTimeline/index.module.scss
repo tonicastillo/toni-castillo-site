@@ -1,0 +1,52 @@
+.container{
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  padding: var(--h-margin-s);
+  //@include background1(rgba(0,0,0,0.2), rgba(255,255,255,0), 3);
+  &.open{
+    display: block;
+  }
+  .contain{
+    padding: var(--text-block-padding);
+    background-color: var(--bColor2);
+    display: flex;
+    .timeline{
+      flex: 1;
+      position: relative;
+      .hLine{
+        position: absolute;
+        top: 50%;
+        right: 0.4em;
+        left: 0.4em;
+        transform: translateY(-0.05em);
+        height: 0.1em;
+        background-color: var(--bColor1);
+        box-shadow: var(--box-shadow1);
+      }
+      .sliderContainer{
+        position: absolute;
+        top: 0;
+        right: 1em;
+        bottom: 0;
+        left: 0.4em;
+      }
+      .slider{
+        position: absolute;
+        left: var(--posx);
+        top: 0;
+        bottom: 0;
+        width: 0.6em;
+        background-color: var(--bColor1);
+        box-shadow: var(--box-shadow1);
+
+      }
+    }
+    .numbers{
+      color: var(--tColor2);
+    }
+  }
+}

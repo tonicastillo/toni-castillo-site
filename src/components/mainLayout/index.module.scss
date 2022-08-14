@@ -2,3 +2,7 @@
 .mainLayout{
   display: block;
 }
+.tvDisplayContainer{
+  position: absolute;
+  z-index: 2;
+}
