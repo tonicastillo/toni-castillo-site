@@ -54,10 +54,16 @@ export const query = graphql`
         dataSubtitle {
           value
         }
-        dataCliente {
-          value
+        clientTitle {
+          value {
+            string
+          }
         }
-
+        clientUrl {
+          value {
+            string
+          }
+        }
         Published {
           value {
             name
@@ -97,7 +103,8 @@ const ProjectTemplate = ({ data }) => {
   const dataDate = project.properties.dataDate?.value;
   const dataTitle = project.properties.dataTitle?.value;
   const dataSubtitle = project.properties.dataSubtitle?.value;
-  const dataCliente = project.properties.dataCliente?.value;
+  const clientTitle = project.properties.clientTitle?.value?.string;
+  const clientUrl = project.properties.clientUrl?.value?.string;
   const creditsTitle = project.properties.creditsTitle?.value?.string;
   const creditsUrl = project.properties.creditsUrl?.value?.string;
   const isPublished = project.properties.Published?.value?.name === "Done";
@@ -150,9 +157,18 @@ const ProjectTemplate = ({ data }) => {
                 <div className={classNames(styles.titles)}>
                   <h1>{dataSubtitle}</h1>
                 </div>
-                {dataCliente && (
-                  <div className={classNames(styles.titles)}>
-                    <span>For: {dataCliente}</span>
+                {clientTitle && (
+                  <div className={classNames(styles.titles, styles.tCredits)}>
+                    {clientUrl ? (
+                      <span>
+                        For:{" "}
+                        <a href={clientUrl} target="_blank" rel="noreferrer">
+                          {clientTitle}
+                        </a>
+                      </span>
+                    ) : (
+                      <span>For: {clientTitle}</span>
+                    )}
                   </div>
                 )}
                 {creditsTitle && (
@@ -210,8 +226,8 @@ const ProjectTemplate = ({ data }) => {
                 }}
                 streamType="on-demand"
                 controls
-                autoPlay
-                muted
+                autoPlay="any"
+                // muted
                 onTimeUpdate={onVideoTimeUpdate}
                 onEnded={onVideoEnded}
               />

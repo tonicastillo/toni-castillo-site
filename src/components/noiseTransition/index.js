@@ -11,11 +11,9 @@ const NoiseTransition = ({ videoCurrentTime, videoDuration }) => {
     const transitionTime = 2;
     if (videoCurrentTime < transitionTime) {
       isStarting = true;
-      console.log("isStarting");
     }
     if (videoDuration - videoCurrentTime < transitionTime) {
       isEnding = true;
-      console.log("isEnding");
     }
     if (isStarting || isEnding) {
       // const position = videoCurrentTime / videoDuration;
@@ -38,14 +36,12 @@ const NoiseTransition = ({ videoCurrentTime, videoDuration }) => {
           (1 -
             (videoCurrentTime - transitionTime) /
               (transitionOpacityTime - transitionTime));
-        console.log(op);
         setOpacity(op);
       } else {
         setOpacity(0);
       }
     }
   }, [videoCurrentTime, videoDuration]);
-  console.log(opacity);
   if (opacity === 0) return null;
   return (
     <div
