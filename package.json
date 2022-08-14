@@ -17,7 +17,7 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "@mux/mux-player-react": "^0.1.0-beta.26",
+    "@mux/mux-video-react": "^0.5.1",
     "@react-three/drei": "^9.19.7",
     "@react-three/fiber": "^8.3.1",
     "@react-three/flex": "^1.0.0",

@@ -4,7 +4,8 @@ import classNames from "classnames";
 import * as styles from "./index.module.scss";
 import "./muxPlayer.css";
 import { graphql } from "gatsby";
-import MuxPlayer from "@mux/mux-player-react";
+import MuxVideo from "@mux/mux-video-react";
+
 import {
   TransitionState,
   useTriggerTransition,
@@ -113,8 +114,8 @@ const ProjectTemplate = ({ data }) => {
   const [videoDuration, setVideoDuration] = useState(null);
 
   const onVideoTimeUpdate = (e) => {
-    const currentTime = e.target?.media?.currentTime;
-    const duration = e.target?.media?.duration;
+    const currentTime = e.target?.currentTime;
+    const duration = e.target?.duration;
     if (currentTime < 3) {
       setIsStarting(true);
     } else {
@@ -199,18 +200,33 @@ const ProjectTemplate = ({ data }) => {
                 videoCurrentTime={videoCurrentTime}
                 videoDuration={videoDuration}
               />
-              <MuxPlayer
-                streamType="on-demand"
+              {/*<MuxPlayer*/}
+              {/*  streamType="on-demand"*/}
+              {/*  playbackId={dataVideoPlaybackId}*/}
+              {/*  metadata={{*/}
+              {/*    video_title: dataTitle,*/}
+              {/*    video_user_id: muxUserId,*/}
+              {/*  }}*/}
+              {/*  // loop={true}*/}
+              {/*  autoplay="any"*/}
+              {/*  // controls={false}*/}
+              {/*  mure={true}*/}
+              {/*  className="muxVideoPlayer"*/}
+              {/*  onTimeUpdate={onVideoTimeUpdate}*/}
+              {/*  onEnded={onVideoEnded}*/}
+              {/*/>*/}
+              <MuxVideo
+                className="muxVideoPlayer"
                 playbackId={dataVideoPlaybackId}
                 metadata={{
+                  // video_id: "video-id-123456",
                   video_title: dataTitle,
-                  video_user_id: muxUserId,
+                  viewer_user_id: muxUserId,
                 }}
-                // loop={true}
-                autoplay="any"
-                // controls={false}
-                mure={true}
-                className="muxVideoPlayer"
+                streamType="on-demand"
+                controls
+                autoPlay
+                muted
                 onTimeUpdate={onVideoTimeUpdate}
                 onEnded={onVideoEnded}
               />
