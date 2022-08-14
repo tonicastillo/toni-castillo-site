@@ -27,7 +27,7 @@
 }
 .projectInfo{
   position: absolute;
-  z-index: 10;
+  z-index: var(--zInfoPanel);
   right: 0;
   bottom: 0;
   left: 0;

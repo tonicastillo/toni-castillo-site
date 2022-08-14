@@ -15,6 +15,7 @@ import { tTransitionProps } from "../../components/tLink";
 import { GeneralContext } from "../../contexts/generalContext";
 
 import VideoTimeline from "../../components/videoTimeline";
+import NoiseTransition from "../../components/noiseTransition";
 
 export const query = graphql`
   query ($projectSlug: String!) {
@@ -88,9 +89,6 @@ const ProjectTemplate = ({ data }) => {
   const triggerTransition = useTriggerTransition(tTransitionProps);
   const projects = data?.allNotion.nodes;
 
-  const [isStarting, setIsStarting] = useState();
-  const [isEnding, setIsEnding] = useState();
-
   const project = data?.notion;
 
   const muxUserId = data.site.siteMetadata.muxUserId;
@@ -116,16 +114,6 @@ const ProjectTemplate = ({ data }) => {
   const onVideoTimeUpdate = (e) => {
     const currentTime = e.target?.currentTime;
     const duration = e.target?.duration;
-    if (currentTime < 3) {
-      setIsStarting(true);
-    } else {
-      setIsStarting(false);
-    }
-    if (duration - currentTime < 3) {
-      setIsEnding(true);
-    } else {
-      setIsEnding(false);
-    }
     setVideoCurrentTime(currentTime);
     setVideoDuration(duration);
   };
@@ -136,13 +124,6 @@ const ProjectTemplate = ({ data }) => {
       triggerTransition: triggerTransition,
     });
   };
-
-  useEffect(() => {
-    console.log("Esta empezando? ", isStarting);
-  }, [isStarting]);
-  useEffect(() => {
-    console.log("Esta acabando? ", isEnding);
-  }, [isEnding]);
 
   return (
     <>
@@ -215,6 +196,10 @@ const ProjectTemplate = ({ data }) => {
               {/*  onTimeUpdate={onVideoTimeUpdate}*/}
               {/*  onEnded={onVideoEnded}*/}
               {/*/>*/}
+              <NoiseTransition
+                videoCurrentTime={videoCurrentTime}
+                videoDuration={videoDuration}
+              />
               <MuxVideo
                 className="muxVideoPlayer"
                 playbackId={dataVideoPlaybackId}

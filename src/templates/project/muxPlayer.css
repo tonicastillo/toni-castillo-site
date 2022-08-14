@@ -1,4 +1,6 @@
 .muxVideoPlayer{
+    position: relative;
+    z-index: var(--zVideoPlayer);
     width: 100%;
     height: 100%;
 }
