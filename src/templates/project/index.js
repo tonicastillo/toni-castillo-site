@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import classNames from "classnames";
-
 import * as styles from "./index.module.scss";
-import "./muxPlayer.css";
 import { graphql } from "gatsby";
-import MuxVideo from "@mux/mux-video-react";
+import VideoPlayer from "../../components/videoPlayer";
 
 import {
   TransitionState,
@@ -115,14 +113,32 @@ const ProjectTemplate = ({ data }) => {
   //  \ \/ / )(  ) D ( ) _)(  O )   ) _) \ \/ / ) _) /    /  )(  \___ \
   //   \__/ (__)(____/(____)\__/   (____) \__/ (____)\_)__) (__) (____/
 
-  const [videoCurrentTime, setVideoCurrentTime] = useState(null);
-  const [videoDuration, setVideoDuration] = useState(null);
+  const [videoControls, setVideoControls] = useState({
+    status: {
+      currentTime: null,
+      duration: null,
+      isPlaying: null,
+    },
+    actions: {
+      play: () => {},
+      pause: () => {},
+      setVolume: () => {},
+    },
+  });
 
+  //helper
+  const setVideoStatus = (statusName, value) => {
+    setVideoControls((videoControls) => {
+      const cv = { ...videoControls };
+      cv.status[statusName] = value;
+      return cv;
+    });
+  };
   const onVideoTimeUpdate = (e) => {
     const currentTime = e.target?.currentTime;
     const duration = e.target?.duration;
-    setVideoCurrentTime(currentTime);
-    setVideoDuration(duration);
+    setVideoStatus("currentTime", currentTime);
+    setVideoStatus("duration", duration);
   };
 
   const onVideoEnded = () => {
@@ -194,8 +210,9 @@ const ProjectTemplate = ({ data }) => {
                 </div>
               </div>
               <VideoTimeline
-                videoCurrentTime={videoCurrentTime}
-                videoDuration={videoDuration}
+                videoCurrentTime={videoControls.status.currentTime}
+                videoDuration={videoControls.status.duration}
+                controls={[videoControls, setVideoControls]}
               />
               {/*<MuxPlayer*/}
               {/*  streamType="on-demand"*/}
@@ -213,23 +230,18 @@ const ProjectTemplate = ({ data }) => {
               {/*  onEnded={onVideoEnded}*/}
               {/*/>*/}
               <NoiseTransition
-                videoCurrentTime={videoCurrentTime}
-                videoDuration={videoDuration}
+                videoCurrentTime={videoControls.status.currentTime}
+                videoDuration={videoControls.status.duration}
               />
-              <MuxVideo
-                className="muxVideoPlayer"
-                playbackId={dataVideoPlaybackId}
-                metadata={{
-                  // video_id: "video-id-123456",
-                  video_title: dataTitle,
-                  viewer_user_id: muxUserId,
+              <VideoPlayer
+                videoData={{
+                  dataVideoPlaybackId: dataVideoPlaybackId,
+                  dataTitle: dataTitle,
+                  muxUserId: muxUserId,
                 }}
-                streamType="on-demand"
-                controls
-                autoPlay="any"
-                // muted
                 onTimeUpdate={onVideoTimeUpdate}
                 onEnded={onVideoEnded}
+                controls={[videoControls, setVideoControls]}
               />
             </main>
           );

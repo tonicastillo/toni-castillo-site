@@ -3,11 +3,19 @@ import * as styles from "./index.module.scss";
 import classNames from "classnames";
 // import GeneralContextProvider from "../../contexts/generalContext";
 
-const VideoTimeline = ({ videoCurrentTime, videoDuration }) => {
+const VideoTimeline = ({ videoCurrentTime, videoDuration, controls }) => {
+  const [videoControls, setVideoControls] = controls;
   return (
     <div className={classNames(styles.container, styles.open)}>
       {videoDuration ? (
         <div className={styles.contain}>
+          <div>
+            {videoControls.status.isPlaying ? (
+              <div onClick={videoControls.actions.pause}>PAUSE</div>
+            ) : (
+              <div onClick={videoControls.actions.play}>PLAY</div>
+            )}
+          </div>
           <div className={styles.timeline}>
             <div className={styles.hLine} />
             <div className={styles.sliderContainer}>
