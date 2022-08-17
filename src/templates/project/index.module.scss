@@ -1,36 +1,32 @@
 @import "../../cssConfig/mixins";
 
 .main{
-  position: fixed;
-  display: flex;
   background: black;
+
+}
+
+.panel{
+  display: flex;
+  position: fixed;
   width: 100vw;
   height: 100vh;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: var(--zInfoPanel);
 }
-
-
-.content {
-  width: 334px;
-  height: 216px;
-  background: #f0f0f0;
-  border-radius: 3px;
-  overflow-y: auto;
-  padding: 0;
-}
-
-.webGlContent{
+.video{
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--zVideoPlayer);
 }
 .projectInfo{
-  position: absolute;
-  z-index: var(--zInfoPanel);
-  right: 0;
-  bottom: 0;
-  left: 0;
+  //position: absolute;
+  //right: 0;
+  //bottom: 0;
+  //left: 0;
+  //grid-area: 2 / 1 / 2 / 2;
   display: none;
   padding: var(--h-margin-s);
   //@include background1(rgba(0,0,0,0.2), rgba(255,255,255,0), 3);
@@ -59,5 +55,10 @@
 .tCredits{
    a{
     text-decoration: underline;
+  }
+}
+.tTags{
+  span{
+
   }
 }

@@ -39,6 +39,11 @@ export const query = graphql`
     }
     notion(title: { eq: $projectSlug }) {
       properties {
+        ambito {
+          value {
+            name
+          }
+        }
         dataVideoPlaybackId {
           value
         }
@@ -62,6 +67,11 @@ export const query = graphql`
           }
         }
         Published {
+          value {
+            name
+          }
+        }
+        dataTechnology {
           value {
             name
           }
@@ -113,9 +123,16 @@ const ProjectTemplateContent = ({ data }) => {
   const clientUrl = project.properties.clientUrl?.value?.string;
   const creditsTitle = project.properties.creditsTitle?.value?.string;
   const creditsUrl = project.properties.creditsUrl?.value?.string;
-  const isPublished = project.properties.Published?.value?.name === "Done";
-  const dataLanguajes = project.properties.dataLanguajes?.value?.name;
+  // const isPublished = project.properties.Published?.value?.name === "Done";
 
+  const dataAmbitos = project.properties.ambito?.value;
+  const dataTechnology = project.properties.dataTechnology?.value;
+  const dataLanguajes = project.properties.dataLanguajes?.value;
+
+  const dataTags = [...dataAmbitos, ...dataTechnology, ...dataLanguajes];
+
+  console.log(dataAmbitos);
+  console.log(dataLanguajes);
   const onVideoEnded = () => {
     goNextProject({
       projects: projects,
@@ -135,7 +152,7 @@ const ProjectTemplateContent = ({ data }) => {
     initVideoData();
     updateVideoControls("events", "ended", onVideoEnded);
   }, []);
-
+  console.log(dataTags);
   return (
     <>
       {/*<Seo
@@ -149,61 +166,72 @@ const ProjectTemplateContent = ({ data }) => {
         {({ transitionStatus, exit, entry }) => {
           return (
             <main className={styles.main}>
-              <div
-                className={classNames(styles.projectInfo, {
-                  [styles.open]: isProjectInfoOpen,
-                })}
-              >
-                <div className={classNames(styles.titles, styles.tTitle)}>
-                  {dataDate && <span className={styles.date}>#{dataDate}</span>}{" "}
-                  <h2>{dataTitle}</h2>
-                </div>
-                <div className={classNames(styles.titles)}>
-                  <h1>{dataSubtitle}</h1>
-                </div>
-                {clientTitle && (
-                  <div className={classNames(styles.titles, styles.tCredits)}>
-                    {clientUrl ? (
-                      <span>
-                        For:{" "}
-                        <a href={clientUrl} target="_blank" rel="noreferrer">
-                          {clientTitle}
-                        </a>
-                      </span>
-                    ) : (
-                      <span>For: {clientTitle}</span>
-                    )}
+              <div className={styles.panel}>
+                <div
+                  className={classNames(styles.projectInfo, {
+                    [styles.open]: isProjectInfoOpen,
+                  })}
+                >
+                  <div className={classNames(styles.titles, styles.tTitle)}>
+                    {dataDate && (
+                      <span className={styles.date}>#{dataDate}</span>
+                    )}{" "}
+                    <h2>{dataTitle}</h2>
                   </div>
-                )}
-                {creditsTitle && (
-                  <div className={classNames(styles.titles, styles.tCredits)}>
-                    {creditsUrl ? (
-                      <span>
-                        With:{" "}
-                        <a href={creditsUrl} target="_blank" rel="noreferrer">
-                          {creditsTitle}
-                        </a>
-                      </span>
-                    ) : (
-                      <span>With: {creditsTitle}</span>
-                    )}
+                  <div className={classNames(styles.titles)}>
+                    <h1>{dataSubtitle}</h1>
                   </div>
-                )}
-
-                <div className={classNames(styles.titles)}>
-                  <span>{isPublished}</span>
+                  {clientTitle && (
+                    <div className={classNames(styles.titles, styles.tCredits)}>
+                      {clientUrl ? (
+                        <span>
+                          For:{" "}
+                          <a href={clientUrl} target="_blank" rel="noreferrer">
+                            {clientTitle}
+                          </a>
+                        </span>
+                      ) : (
+                        <span>For: {clientTitle}</span>
+                      )}
+                    </div>
+                  )}
+                  {creditsTitle && (
+                    <div className={classNames(styles.titles, styles.tCredits)}>
+                      {creditsUrl ? (
+                        <span>
+                          With:{" "}
+                          <a href={creditsUrl} target="_blank" rel="noreferrer">
+                            {creditsTitle}
+                          </a>
+                        </span>
+                      ) : (
+                        <span>With: {creditsTitle}</span>
+                      )}
+                    </div>
+                  )}
+                  <div className={classNames(styles.titles, styles.tTags)}>
+                    {dataTags.map((tag, idx) => {
+                      console.log(tag);
+                      const name = "#" + tag.name.replaceAll(" ", "_");
+                      const isLast = idx + 1 === dataTags.length;
+                      return (
+                        <span key={idx}>
+                          {name}
+                          {!isLast && ", "}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
-                <div className={classNames(styles.titles)}>
-                  <span>{dataLanguajes}</span>
-                </div>
+                <VideoPlayer.VideoTimeline />
               </div>
-              <VideoPlayer.VideoTimeline />
-
-              <NoiseTransition
-                videoCurrentTime={videoControls.status.currentTime}
-                videoDuration={videoControls.status.duration}
-              />
-              <VideoPlayer.VideoScreen />
+              <div className={styles.video}>
+                <NoiseTransition
+                  videoCurrentTime={videoControls.status.currentTime}
+                  videoDuration={videoControls.status.duration}
+                />
+                <VideoPlayer.VideoScreen />
+              </div>
             </main>
           );
         }}
