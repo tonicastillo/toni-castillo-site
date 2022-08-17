@@ -19,7 +19,6 @@ const NoiseTransition = ({ videoCurrentTime, videoDuration }) => {
       // const position = videoCurrentTime / videoDuration;
       if (isStarting) {
         const isVis = Math.random() < videoCurrentTime / transitionTime;
-        console.log(isVis ? 1 : 0.02);
         setOpacity(isVis ? 1 : 0.02);
       }
       if (isEnding) {

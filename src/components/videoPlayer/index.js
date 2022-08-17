@@ -1,63 +1,66 @@
-import React, { useEffect, useRef } from "react";
-import * as styles from "./index.module.scss";
-import classNames from "classnames";
-import MuxVideo from "@mux/mux-video-react";
+import React, { useState, createContext, useEffect } from "react";
+import VideoScreen from "./videoScreen";
+import VideoTimeline from "./videoTimeline";
 
-const VideoPlayer = ({ videoData, onTimeUpdate, onEnded, controls }) => {
-  const { dataVideoPlaybackId, dataTitle, muxUserId } = videoData;
-  const [videoControls, setVideoControls] = controls;
+export const VideoContext = createContext();
 
-  const videoRef = useRef();
+const VideoContextProvider = ({ children }) => {
+  const onTimeUpdate = (e) => {
+    const currentTime = e.target?.currentTime;
+    const duration = e.target?.duration;
+    updateVideoControls("status", "currentTime", currentTime);
+    updateVideoControls("status", "duration", duration);
+  };
 
+  const [videoControls, setVideoControls] = useState({
+    status: {
+      currentTime: null,
+      duration: null,
+      isPlaying: null,
+      volume: null,
+    },
+    actions: {
+      play: () => {},
+      pause: () => {},
+      setVolume: () => {},
+      goTo: () => {},
+    },
+    events: {
+      timeUpdate: onTimeUpdate,
+      ended: () => {},
+    },
+  });
+  const [videoData, setVideoData] = useState({});
+  // useEffect(() => {
+  //   console.log(videoControls);
+  // }, [videoControls]);
   //helper
-  const setVideoStatus = (statusName, value) => {
+  const updateVideoControls = (type, statusName, value) => {
     setVideoControls((videoControls) => {
       const cv = { ...videoControls };
-      cv.status[statusName] = value;
+      cv[type][statusName] = value;
       return cv;
     });
   };
-  const play = () => {
-    console.log("play");
-    videoRef.current.play();
-  };
-  const pause = () => {
-    console.log("pause");
-    videoRef.current.pause();
-  };
-  useEffect(() => {
-    setVideoControls((videoControls) => {
-      const cv = { ...videoControls };
-      cv.actions.play = play;
-      cv.actions.pause = pause;
-      return cv;
-    });
-  }, []);
 
-  const onPlaying = () => {
-    setVideoStatus("isPlaying", true);
-  };
-  const onPause = () => {
-    setVideoStatus("isPlaying", false);
-  };
   return (
-    <MuxVideo
-      ref={videoRef}
-      className={styles.container}
-      playbackId={dataVideoPlaybackId}
-      metadata={{
-        video_title: dataTitle,
-        viewer_user_id: muxUserId,
+    <VideoContext.Provider
+      value={{
+        videoControls: videoControls,
+        setVideoControls: setVideoControls,
+        updateVideoControls: updateVideoControls,
+        videoData: videoData,
+        setVideoData: setVideoData,
       }}
-      streamType="on-demand"
-      controls
-      autoPlay="any"
-      onTimeUpdate={onTimeUpdate}
-      onEnded={onEnded}
-      onPlaying={onPlaying}
-      onPause={onPause}
-    />
+    >
+      {children}
+    </VideoContext.Provider>
   );
 };
 
+const VideoPlayer = {
+  VideoScreen,
+  VideoTimeline,
+  VideoContextProvider,
+};
 export default VideoPlayer;

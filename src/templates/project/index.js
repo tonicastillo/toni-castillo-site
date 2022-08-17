@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import classNames from "classnames";
 import * as styles from "./index.module.scss";
 import { graphql } from "gatsby";
-import VideoPlayer from "../../components/videoPlayer";
+import VideoPlayer, { VideoContext } from "../../components/videoPlayer";
 
 import {
   TransitionState,
@@ -12,7 +12,6 @@ import { goNextProject } from "../../helpers/goNextProject";
 import { tTransitionProps } from "../../components/tLink";
 import { GeneralContext } from "../../contexts/generalContext";
 
-import VideoTimeline from "../../components/videoTimeline";
 import NoiseTransition from "../../components/noiseTransition";
 
 export const query = graphql`
@@ -87,8 +86,17 @@ export const query = graphql`
   }
 `;
 const ProjectTemplate = ({ data }) => {
+  return (
+    <VideoPlayer.VideoContextProvider>
+      <ProjectTemplateContent data={data} />
+    </VideoPlayer.VideoContextProvider>
+  );
+};
+const ProjectTemplateContent = ({ data }) => {
   const generalContext = useContext(GeneralContext);
   const { isProjectInfoOpen } = generalContext;
+  const videoContext = useContext(VideoContext);
+  const { videoControls, setVideoData, updateVideoControls } = videoContext;
 
   const triggerTransition = useTriggerTransition(tTransitionProps);
   const projects = data?.allNotion.nodes;
@@ -108,45 +116,25 @@ const ProjectTemplate = ({ data }) => {
   const isPublished = project.properties.Published?.value?.name === "Done";
   const dataLanguajes = project.properties.dataLanguajes?.value?.name;
 
-  //   _  _  __  ____  ____  __     ____  _  _  ____  __ _  ____  ____
-  //  / )( \(  )(    \(  __)/  \   (  __)/ )( \(  __)(  ( \(_  _)/ ___)
-  //  \ \/ / )(  ) D ( ) _)(  O )   ) _) \ \/ / ) _) /    /  )(  \___ \
-  //   \__/ (__)(____/(____)\__/   (____) \__/ (____)\_)__) (__) (____/
-
-  const [videoControls, setVideoControls] = useState({
-    status: {
-      currentTime: null,
-      duration: null,
-      isPlaying: null,
-    },
-    actions: {
-      play: () => {},
-      pause: () => {},
-      setVolume: () => {},
-    },
-  });
-
-  //helper
-  const setVideoStatus = (statusName, value) => {
-    setVideoControls((videoControls) => {
-      const cv = { ...videoControls };
-      cv.status[statusName] = value;
-      return cv;
-    });
-  };
-  const onVideoTimeUpdate = (e) => {
-    const currentTime = e.target?.currentTime;
-    const duration = e.target?.duration;
-    setVideoStatus("currentTime", currentTime);
-    setVideoStatus("duration", duration);
-  };
-
   const onVideoEnded = () => {
     goNextProject({
       projects: projects,
       triggerTransition: triggerTransition,
     });
   };
+
+  const initVideoData = () => {
+    setVideoData({
+      dataVideoPlaybackId: dataVideoPlaybackId,
+      dataTitle: dataTitle,
+      muxUserId: muxUserId,
+    });
+  };
+
+  useEffect(() => {
+    initVideoData();
+    updateVideoControls("events", "ended", onVideoEnded);
+  }, []);
 
   return (
     <>
@@ -209,40 +197,13 @@ const ProjectTemplate = ({ data }) => {
                   <span>{dataLanguajes}</span>
                 </div>
               </div>
-              <VideoTimeline
-                videoCurrentTime={videoControls.status.currentTime}
-                videoDuration={videoControls.status.duration}
-                controls={[videoControls, setVideoControls]}
-              />
-              {/*<MuxPlayer*/}
-              {/*  streamType="on-demand"*/}
-              {/*  playbackId={dataVideoPlaybackId}*/}
-              {/*  metadata={{*/}
-              {/*    video_title: dataTitle,*/}
-              {/*    video_user_id: muxUserId,*/}
-              {/*  }}*/}
-              {/*  // loop={true}*/}
-              {/*  autoplay="any"*/}
-              {/*  // controls={false}*/}
-              {/*  mure={true}*/}
-              {/*  className="muxVideoPlayer"*/}
-              {/*  onTimeUpdate={onVideoTimeUpdate}*/}
-              {/*  onEnded={onVideoEnded}*/}
-              {/*/>*/}
+              <VideoPlayer.VideoTimeline />
+
               <NoiseTransition
                 videoCurrentTime={videoControls.status.currentTime}
                 videoDuration={videoControls.status.duration}
               />
-              <VideoPlayer
-                videoData={{
-                  dataVideoPlaybackId: dataVideoPlaybackId,
-                  dataTitle: dataTitle,
-                  muxUserId: muxUserId,
-                }}
-                onTimeUpdate={onVideoTimeUpdate}
-                onEnded={onVideoEnded}
-                controls={[videoControls, setVideoControls]}
-              />
+              <VideoPlayer.VideoScreen />
             </main>
           );
         }}

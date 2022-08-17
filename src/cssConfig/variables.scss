@@ -5,8 +5,10 @@
   //colors
   --tColor1: #0000ff;
   --tColor2: #ffffff;
+  --tColorHover: #ffff00;
   --bColor1: #ffffff;
   --bColor2: #0000ff;
+  --bColorHover: #ffff00;
 
   --font-size-s: 14px;
   --font-size-m: 4vh;
@@ -15,7 +17,6 @@
 
   --text-shadow1: 0.04em 0.04em 0.02em rgba(50,0,0,0.4);
   --box-shadow1: 0.08em 0.08em 0.06em rgba(100,0,0,0.4), -0.03em -0.06em 0.08em rgba(0,0,100,0.4);
-
 
   // z index:
   --zVideoPlayer: 1;
