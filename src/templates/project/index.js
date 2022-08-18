@@ -8,9 +8,13 @@ import {
   TransitionState,
   useTriggerTransition,
 } from "gatsby-plugin-transition-link";
-import { goNextProject } from "../../helpers/goNextProject";
 import { tTransitionProps } from "../../components/tLink";
 import { GeneralContext } from "../../contexts/generalContext";
+import {
+  goNextProject,
+  getNextProject,
+  saveNextProject,
+} from "../../helpers/goNextProject";
 
 export const query = graphql`
   query ($projectSlug: String!) {
@@ -43,6 +47,9 @@ export const query = graphql`
           }
         }
         dataVideoPlaybackId {
+          value
+        }
+        bgColor {
           value
         }
         dataDate {
@@ -108,6 +115,7 @@ const ProjectTemplate = ({ data }) => {
   const muxUserId = data.site.siteMetadata.muxUserId;
 
   const dataVideoPlaybackId = project.properties.dataVideoPlaybackId?.value;
+  const bgColor = project.properties.bgColor?.value;
   const dataDate = project.properties.dataDate?.value;
   const dataTitle = project.properties.dataTitle?.value;
   const dataSubtitle = project.properties.dataSubtitle?.value;
@@ -123,8 +131,7 @@ const ProjectTemplate = ({ data }) => {
 
   const dataTags = [...dataAmbitos, ...dataTechnology, ...dataLanguajes];
 
-  const onVideoEnded = () => {
-    console.log("onVideoEnded");
+  const goNext = () => {
     goNextProject({
       projects: projects,
       triggerTransition: triggerTransition,
@@ -136,12 +143,21 @@ const ProjectTemplate = ({ data }) => {
       dataVideoPlaybackId: dataVideoPlaybackId,
       dataTitle: dataTitle,
       muxUserId: muxUserId,
+      bgColor: bgColor,
     });
   };
 
   useEffect(() => {
     initVideoData();
-    updateVideoControls("events", "ended", onVideoEnded);
+    updateVideoControls("events", "ended", () => goNext());
+    updateVideoControls(
+      "status",
+      "nextProject",
+      getNextProject({ projects: projects })
+    );
+    updateVideoControls("actions", "saveNextProject", () =>
+      saveNextProject(videoControls.status.nextProject.number)
+    );
   }, []);
   return (
     <>

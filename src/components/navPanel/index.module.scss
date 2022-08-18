@@ -1,0 +1,57 @@
+@import '../../cssConfig/mixins';
+.infoButton{
+  position: fixed;
+  top: var(--h-margin-s);
+  right: var(--h-margin-s);
+  z-index: var(--zNavButton);
+  color: var(--tColor1);
+  cursor: pointer;
+  &:hover{
+    color: var(--tColorHover);
+  }
+
+}
+.container{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  height: -webkit-fill-available;
+  z-index: var(--zNavPanel);
+
+  display: none;
+  &.open{
+    display: block;
+  }
+  .contain{
+    position: relative;
+    overflow-y: auto;
+    height: 100vh;
+
+    z-index: 2;
+    .texts{
+      padding: var(--h-margin-s);
+    }
+    .projects{
+      flex: 1;
+      padding: var(--h-margin-s);
+      .projectList{
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        &>*{
+          display: inline-block;
+          margin-right: 0.4em;
+        }
+      }
+    }
+
+  }
+  .background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+}

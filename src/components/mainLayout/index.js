@@ -2,48 +2,46 @@ import * as React from "react";
 import "./reset.scss";
 import "./body.scss";
 import * as styles from "./index.module.scss";
-import { useTriggerTransition } from "gatsby-plugin-transition-link";
-import { tTransitionProps } from "../tLink";
+// import { useTriggerTransition } from "gatsby-plugin-transition-link";
+// import { tTransitionProps } from "../tLink";
 import { goNextProject } from "../../helpers/goNextProject";
 import GeneralContextProvider from "../../contexts/generalContext";
+import NavPanel from "../navPanel";
 import VideoPlayer from "../videoPlayer";
 
 const Layout = (props) => {
-  const triggerTransition = useTriggerTransition(tTransitionProps);
+  // const triggerTransition = useTriggerTransition(tTransitionProps);
   const { children, data } = props;
   const projects = data?.allNotion.nodes;
   return (
-    <GeneralContextProvider>
-      <VideoPlayer.VideoContextProvider>
-        {/*<TvDisplay*/}
-        {/*  projects={projects}*/}
-        {/*  triggerTransition={triggerTransition}*/}
-        {/*/>*/}
+    <VideoPlayer.VideoContextProvider>
+      <GeneralContextProvider>
+        <NavPanel projects={projects} />
         <div className={styles.templateContent}>{children}</div>
         <div className={styles.video}>
           <VideoPlayer.NoiseTransition />
           <VideoPlayer.VideoScreen />
         </div>
-      </VideoPlayer.VideoContextProvider>
-    </GeneralContextProvider>
+      </GeneralContextProvider>
+    </VideoPlayer.VideoContextProvider>
   );
 };
 
-const TvDisplay = (props) => {
-  const { projects, triggerTransition } = props;
-  return (
-    <div
-      className={styles.tvDisplayContainer}
-      onClick={() =>
-        goNextProject({
-          projects: projects,
-          triggerTransition: triggerTransition,
-        })
-      }
-    >
-      Next Project
-    </div>
-  );
-};
+// const TvDisplay = (props) => {
+//   const { projects, triggerTransition } = props;
+//   return (
+//     <div
+//       className={styles.tvDisplayContainer}
+//       onClick={() =>
+//         goNextProject({
+//           projects: projects,
+//           triggerTransition: triggerTransition,
+//         })
+//       }
+//     >
+//       Next Project
+//     </div>
+//   );
+// };
 
 export default Layout;

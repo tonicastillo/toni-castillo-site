@@ -21,6 +21,10 @@ const VideoContextProvider = ({ children }) => {
       volume: null,
       isFirstPlaying: null,
       isSeeking: null,
+      nextProject: {
+        number: null,
+        title: null,
+      },
     },
     actions: {
       play: () => {},
@@ -35,10 +39,7 @@ const VideoContextProvider = ({ children }) => {
   });
 
   const [videoData, setVideoData] = useState({});
-  // useEffect(() => {
-  //   console.log(videoControls);
-  // }, [videoControls]);
-  //helper
+
   const updateVideoControls = (type, statusName, value) => {
     setVideoControls((videoControls) => {
       const cv = { ...videoControls };

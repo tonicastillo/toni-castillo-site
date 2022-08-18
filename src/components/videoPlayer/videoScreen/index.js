@@ -8,7 +8,7 @@ const VideoScreen = () => {
   const videoContext = useContext(VideoContext);
   const { videoControls, videoData, updateVideoControls } = videoContext;
 
-  const { dataVideoPlaybackId, dataTitle, muxUserId } = videoData;
+  const { dataVideoPlaybackId, dataTitle, muxUserId, bgColor } = videoData;
 
   const play = () => {
     videoRef.current.play();
@@ -48,11 +48,9 @@ const VideoScreen = () => {
 
   const onSeeking = () => {
     updateVideoControls("status", "isSeeking", true);
-    console.log("onSeeking");
   };
 
   const onSeeked = () => {
-    console.log("onSeeked");
     updateVideoControls("status", "isSeeking", false);
   };
 
@@ -63,24 +61,13 @@ const VideoScreen = () => {
     updateVideoControls("actions", "setVolume", setVolume);
   }, []);
 
-  // const onCanPlay = () => {
-  //   videoRef.current.muted = false;
-  //   if (videoRef.current) {
-  //     if (videoRef.current.volume > 0 && !videoRef.current.muted) {
-  //       console.log(videoRef.current.volume);
-  //       updateVideoControls("status", "volume", videoRef.current.volume);
-  //     } else {
-  //       console.log("CERO");
-  //
-  //       updateVideoControls("status", "volume", 0);
-  //     }
-  //   }
-  // };
-
   if (videoData === {}) return null;
   return (
     <MuxVideo
       ref={videoRef}
+      style={{
+        "--bg-video-color": bgColor ? bgColor : "#000000",
+      }}
       className={styles.container}
       playbackId={dataVideoPlaybackId}
       metadata={{

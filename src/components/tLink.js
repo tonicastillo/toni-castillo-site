@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import TransitionLink from "gatsby-plugin-transition-link";
+import { GeneralContext } from "../contexts/generalContext";
 
 export const tTransitionProps = {
   exit: { length: 1 },
@@ -7,6 +8,15 @@ export const tTransitionProps = {
 };
 
 const TLink = (props) => {
-  return <TransitionLink {...props} {...tTransitionProps} />;
+  const generalContext = useContext(GeneralContext);
+  const { setIsNavPanelOpen } = generalContext;
+
+  return (
+    <TransitionLink
+      onClick={() => setIsNavPanelOpen(false)}
+      {...props}
+      {...tTransitionProps}
+    />
+  );
 };
 export default TLink;

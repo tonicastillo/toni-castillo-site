@@ -1,14 +1,11 @@
 
+
+
 .templateContent{
   position: relative;
   display: block;
   z-index: var(--zTemplateContent);
 }
-.tvDisplayContainer{
-  position: absolute;
-  z-index: 2;
-}
-
 .video{
   position: fixed;
   width: 100vw;

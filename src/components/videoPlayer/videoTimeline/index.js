@@ -5,7 +5,7 @@ import ReactSlider from "react-slider";
 import { VideoContext } from "../index";
 import SpeakerIcon from "./speakerIcon";
 import NextIcon from "./nextIcon";
-import { goNextProject } from "../../../helpers/goNextProject";
+import TLink from "../../tLink";
 
 const VideoTimeline = () => {
   const videoContext = useContext(VideoContext);
@@ -27,17 +27,17 @@ const VideoTimeline = () => {
             goTo={videoControls.actions.goTo}
           />
           <div className={styles.nextButton}>
-            <div
-              onClick={() => console.log("next!")}
+            <TLink
+              to={`/${videoControls.status.nextProject.title}`}
+              onClick={() => videoControls.actions.saveNextProject()}
               className={styles.nextContainer}
             >
               <NextIcon />
-            </div>
+            </TLink>
           </div>
           <div className={styles.volume}>
             <div
               onClick={() => {
-                console.log(videoControls.status.volume);
                 videoControls.actions.setVolume(
                   videoControls.status.volume === 0 ? 1 : 0
                 );
