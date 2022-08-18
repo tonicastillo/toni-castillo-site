@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect } from "react";
 import VideoScreen from "./videoScreen";
 import VideoTimeline from "./videoTimeline";
+import NoiseTransition from "./noiseTransition";
 
 export const VideoContext = createContext();
 
@@ -18,6 +19,8 @@ const VideoContextProvider = ({ children }) => {
       duration: null,
       isPlaying: null,
       volume: null,
+      isFirstPlaying: null,
+      isSeeking: null,
     },
     actions: {
       play: () => {},
@@ -30,6 +33,7 @@ const VideoContextProvider = ({ children }) => {
       ended: () => {},
     },
   });
+
   const [videoData, setVideoData] = useState({});
   // useEffect(() => {
   //   console.log(videoControls);
@@ -42,6 +46,13 @@ const VideoContextProvider = ({ children }) => {
       return cv;
     });
   };
+
+  useEffect(() => {
+    updateVideoControls("status", "isFirstPlaying", false);
+    updateVideoControls("status", "isSeeking", false);
+    updateVideoControls("status", "currentTime", null);
+    updateVideoControls("status", "duration", null);
+  }, [videoData]);
 
   return (
     <VideoContext.Provider
@@ -61,6 +72,7 @@ const VideoContextProvider = ({ children }) => {
 const VideoPlayer = {
   VideoScreen,
   VideoTimeline,
+  NoiseTransition,
   VideoContextProvider,
 };
 export default VideoPlayer;

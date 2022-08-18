@@ -46,7 +46,6 @@ const IndexPage = ({ data }) => {
         {({ transitionStatus, exit, entry }) => {
           return (
             <main className={styles.main}>
-              <h1>Hola</h1>
               <ul>
                 {projects &&
                   projects.map((project) => {

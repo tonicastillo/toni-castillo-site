@@ -63,6 +63,21 @@
         }
       }
     }
+    .nextButton{
+      .nextContainer{
+        display: flex;
+        height: 100%;
+        padding: 0 0.3em 0 0.1em;
+        align-items: center;
+        @include link_svg;
+        svg{
+          display: block;
+          width: 0.46em;
+          height: auto;
+          @include svg-shadow;
+        }
+      }
+    }
     .volume{
       .speakerContainer{
         display: flex;
@@ -74,6 +89,7 @@
           display: block;
           width: 0.8em;
           height: auto;
+          @include svg-shadow;
         }
       }
     }

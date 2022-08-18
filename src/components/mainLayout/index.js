@@ -6,6 +6,7 @@ import { useTriggerTransition } from "gatsby-plugin-transition-link";
 import { tTransitionProps } from "../tLink";
 import { goNextProject } from "../../helpers/goNextProject";
 import GeneralContextProvider from "../../contexts/generalContext";
+import VideoPlayer from "../videoPlayer";
 
 const Layout = (props) => {
   const triggerTransition = useTriggerTransition(tTransitionProps);
@@ -13,10 +14,17 @@ const Layout = (props) => {
   const projects = data?.allNotion.nodes;
   return (
     <GeneralContextProvider>
-      <div className={styles.mainLayout}>
-        <TvDisplay projects={projects} triggerTransition={triggerTransition} />
-        {children}
-      </div>
+      <VideoPlayer.VideoContextProvider>
+        {/*<TvDisplay*/}
+        {/*  projects={projects}*/}
+        {/*  triggerTransition={triggerTransition}*/}
+        {/*/>*/}
+        <div className={styles.templateContent}>{children}</div>
+        <div className={styles.video}>
+          <VideoPlayer.NoiseTransition />
+          <VideoPlayer.VideoScreen />
+        </div>
+      </VideoPlayer.VideoContextProvider>
     </GeneralContextProvider>
   );
 };

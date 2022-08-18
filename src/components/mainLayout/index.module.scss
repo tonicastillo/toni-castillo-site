@@ -1,8 +1,19 @@
 
-.mainLayout{
+.templateContent{
+  position: relative;
   display: block;
+  z-index: var(--zTemplateContent);
 }
 .tvDisplayContainer{
   position: absolute;
   z-index: 2;
+}
+
+.video{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  height: -webkit-fill-available;
+  z-index: var(--zVideoPlayer);
+  background-color: black;
 }

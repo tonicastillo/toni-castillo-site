@@ -17,16 +17,43 @@ const VideoScreen = () => {
     videoRef.current.pause();
   };
   const goTo = (time) => {
-    console.log("goTo");
     if (videoRef.current) {
       videoRef.current.currentTime = time;
+      updateVideoControls("status", "currentTime", time);
     }
   };
   const setVolume = (volume) => {
     if (videoRef.current) {
       videoRef.current.volume = volume;
+      if (volume > 0) {
+        videoRef.current.muted = false;
+      } else {
+        videoRef.current.muted = true;
+      }
       updateVideoControls("status", "volume", volume);
     }
+  };
+
+  const onPlaying = () => {
+    updateVideoControls("status", "isPlaying", true);
+    // onCanPlay();
+  };
+  const onPause = () => {
+    updateVideoControls("status", "isPlaying", false);
+  };
+
+  const onPlay = () => {
+    updateVideoControls("status", "isFirstPlaying", true);
+  };
+
+  const onSeeking = () => {
+    updateVideoControls("status", "isSeeking", true);
+    console.log("onSeeking");
+  };
+
+  const onSeeked = () => {
+    console.log("onSeeked");
+    updateVideoControls("status", "isSeeking", false);
   };
 
   useEffect(() => {
@@ -36,13 +63,20 @@ const VideoScreen = () => {
     updateVideoControls("actions", "setVolume", setVolume);
   }, []);
 
-  const onPlaying = () => {
-    updateVideoControls("status", "isPlaying", true);
-    console.log(videoRef.current.volume);
-  };
-  const onPause = () => {
-    updateVideoControls("status", "isPlaying", false);
-  };
+  // const onCanPlay = () => {
+  //   videoRef.current.muted = false;
+  //   if (videoRef.current) {
+  //     if (videoRef.current.volume > 0 && !videoRef.current.muted) {
+  //       console.log(videoRef.current.volume);
+  //       updateVideoControls("status", "volume", videoRef.current.volume);
+  //     } else {
+  //       console.log("CERO");
+  //
+  //       updateVideoControls("status", "volume", 0);
+  //     }
+  //   }
+  // };
+
   if (videoData === {}) return null;
   return (
     <MuxVideo
@@ -60,6 +94,9 @@ const VideoScreen = () => {
       onEnded={videoControls.events.ended}
       onPlaying={onPlaying}
       onPause={onPause}
+      onPlay={onPlay}
+      onSeeking={onSeeking}
+      onSeeked={onSeeked}
     />
   );
 };

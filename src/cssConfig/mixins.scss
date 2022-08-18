@@ -28,3 +28,7 @@
     fill: var(--tColorHover);
   }
 }
+
+@mixin svg-shadow{
+  filter: drop-shadow(0.08em 0.08em 0.04em rgba(50,0,0,0.4));
+}

@@ -12,8 +12,6 @@ import { goNextProject } from "../../helpers/goNextProject";
 import { tTransitionProps } from "../../components/tLink";
 import { GeneralContext } from "../../contexts/generalContext";
 
-import NoiseTransition from "../../components/noiseTransition";
-
 export const query = graphql`
   query ($projectSlug: String!) {
     site {
@@ -95,14 +93,8 @@ export const query = graphql`
     }
   }
 `;
+
 const ProjectTemplate = ({ data }) => {
-  return (
-    <VideoPlayer.VideoContextProvider>
-      <ProjectTemplateContent data={data} />
-    </VideoPlayer.VideoContextProvider>
-  );
-};
-const ProjectTemplateContent = ({ data }) => {
   const generalContext = useContext(GeneralContext);
   const { isProjectInfoOpen } = generalContext;
   const videoContext = useContext(VideoContext);
@@ -131,9 +123,8 @@ const ProjectTemplateContent = ({ data }) => {
 
   const dataTags = [...dataAmbitos, ...dataTechnology, ...dataLanguajes];
 
-  console.log(dataAmbitos);
-  console.log(dataLanguajes);
   const onVideoEnded = () => {
+    console.log("onVideoEnded");
     goNextProject({
       projects: projects,
       triggerTransition: triggerTransition,
@@ -152,7 +143,6 @@ const ProjectTemplateContent = ({ data }) => {
     initVideoData();
     updateVideoControls("events", "ended", onVideoEnded);
   }, []);
-  console.log(dataTags);
   return (
     <>
       {/*<Seo
@@ -211,7 +201,6 @@ const ProjectTemplateContent = ({ data }) => {
                   )}
                   <div className={classNames(styles.titles, styles.tTags)}>
                     {dataTags.map((tag, idx) => {
-                      console.log(tag);
                       const name = "#" + tag.name.replaceAll(" ", "_");
                       const isLast = idx + 1 === dataTags.length;
                       return (
@@ -224,13 +213,6 @@ const ProjectTemplateContent = ({ data }) => {
                   </div>
                 </div>
                 <VideoPlayer.VideoTimeline />
-              </div>
-              <div className={styles.video}>
-                <NoiseTransition
-                  videoCurrentTime={videoControls.status.currentTime}
-                  videoDuration={videoControls.status.duration}
-                />
-                <VideoPlayer.VideoScreen />
               </div>
             </main>
           );

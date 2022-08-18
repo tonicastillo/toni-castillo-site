@@ -19,5 +19,6 @@ export const goNextProject = ({ projects, triggerTransition }) => {
   }
   projectsSeen.push(result);
   localStorage.setItem("projectsSeen", JSON.stringify(projectsSeen));
+  // console.log(`/${projects[result].title}`);
   triggerTransition({ to: `/${projects[result].title}` });
 };

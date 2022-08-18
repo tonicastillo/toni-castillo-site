@@ -4,6 +4,8 @@ import classNames from "classnames";
 import ReactSlider from "react-slider";
 import { VideoContext } from "../index";
 import SpeakerIcon from "./speakerIcon";
+import NextIcon from "./nextIcon";
+import { goNextProject } from "../../../helpers/goNextProject";
 
 const VideoTimeline = () => {
   const videoContext = useContext(VideoContext);
@@ -24,6 +26,14 @@ const VideoTimeline = () => {
             duration={videoControls.status.duration}
             goTo={videoControls.actions.goTo}
           />
+          <div className={styles.nextButton}>
+            <div
+              onClick={() => console.log("next!")}
+              className={styles.nextContainer}
+            >
+              <NextIcon />
+            </div>
+          </div>
           <div className={styles.volume}>
             <div
               onClick={() => {
@@ -34,11 +44,7 @@ const VideoTimeline = () => {
               }}
               className={styles.speakerContainer}
             >
-              <SpeakerIcon
-                color="#ffffff"
-                size="2em"
-                vol={videoControls.status.volume === 1 ? 3 : 0}
-              />
+              <SpeakerIcon vol={videoControls.status.volume === 1 ? 3 : 0} />
             </div>
           </div>
           <div className={styles.numbers}>
@@ -73,6 +79,7 @@ const TimeDrag = ({ currentTime, duration, goTo }) => {
     </div>
   );
 };
+
 //todo
 // const VolumeControls = () => {
 //   return (
