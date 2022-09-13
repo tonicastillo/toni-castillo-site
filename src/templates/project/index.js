@@ -10,11 +10,7 @@ import {
 } from "gatsby-plugin-transition-link";
 import { tTransitionProps } from "../../components/tLink";
 import { GeneralContext } from "../../contexts/generalContext";
-import {
-  goNextProject,
-  getNextProject,
-  saveNextProject,
-} from "../../helpers/goNextProject";
+import { goNextProject, getNextProject } from "../../helpers/goNextProject";
 
 export const query = graphql`
   query ($projectSlug: String!) {
@@ -25,6 +21,7 @@ export const query = graphql`
     }
     allNotion(
       filter: { properties: { Published: { value: { name: { eq: "Done" } } } } }
+      sort: { order: DESC, fields: properties___dataDate___value }
     ) {
       nodes {
         id
@@ -40,6 +37,7 @@ export const query = graphql`
       }
     }
     notion(title: { eq: $projectSlug }) {
+      title
       properties {
         ambito {
           value {
@@ -114,6 +112,7 @@ const ProjectTemplate = ({ data }) => {
 
   const muxUserId = data.site.siteMetadata.muxUserId;
 
+  const dataSlug = project.title;
   const dataVideoPlaybackId = project.properties.dataVideoPlaybackId?.value;
   const bgColor = project.properties.bgColor?.value;
   const dataDate = project.properties.dataDate?.value;
@@ -133,6 +132,7 @@ const ProjectTemplate = ({ data }) => {
 
   const goNext = () => {
     goNextProject({
+      currentProjectSlug: dataSlug,
       projects: projects,
       triggerTransition: triggerTransition,
     });
@@ -153,10 +153,7 @@ const ProjectTemplate = ({ data }) => {
     updateVideoControls(
       "status",
       "nextProject",
-      getNextProject({ projects: projects })
-    );
-    updateVideoControls("actions", "saveNextProject", () =>
-      saveNextProject(videoControls.status.nextProject.number)
+      getNextProject({ currentProjectSlug: dataSlug, projects: projects })
     );
   }, []);
   return (

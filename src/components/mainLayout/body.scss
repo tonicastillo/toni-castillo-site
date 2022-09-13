@@ -2,6 +2,8 @@
 @import "../../cssConfig/fonts";
 @import "../../cssConfig/mixins";
 
+
+
 html,
 body{
   font-family: Teletext50Condensed, Courier, sans-serif;
@@ -9,11 +11,11 @@ body{
   text-shadow: var(--text-shadow1);
   font-smooth: never;
   -webkit-font-smoothing: none;
-  font-size: var(--font-size-m);
+  @include font-size-vh(var(--font-size-m), var(--font-size-m-px));
   line-height: 1.3em;
 }
 h1,h2,h3,h4,h5,h6{
-  font-size: var(--font-size-m);
+  @include font-size-vh(var(--font-size-m), var(--font-size-m-px));
   line-height: 1.3em;
 }
 a{

@@ -1,54 +1,24 @@
-export const goNextProject = ({ projects, triggerTransition }) => {
-  const projectsLength = projects.length;
-  let result;
-  let projectsSeen = JSON.parse(localStorage.getItem("projectsSeen"));
-  if (!projectsSeen) {
-    projectsSeen = [];
-  }
-  if (projectsSeen.length >= projectsLength) {
-    result = projectsSeen.shift();
-  } else {
-    let isViewed;
-    do {
-      result = Math.floor(Math.random() * projectsLength);
-      isViewed =
-        projectsSeen.filter((item) => {
-          return item === result;
-        }).length > 0;
-    } while (isViewed);
-  }
-  projectsSeen.push(result);
-  localStorage.setItem("projectsSeen", JSON.stringify(projectsSeen));
-  triggerTransition({ to: `/${projects[result].title}` });
+export const goNextProject = ({
+  currentProjectSlug,
+  projects,
+  triggerTransition,
+}) => {
+  const nextProject = getNextProject({ currentProjectSlug, projects });
+  triggerTransition({ to: `/${nextProject.title}` });
 };
 
-export const getNextProject = ({ projects }) => {
+export const getNextProject = ({ currentProjectSlug, projects }) => {
   const projectsLength = projects.length;
-  let number;
-  let projectsSeen = JSON.parse(localStorage.getItem("projectsSeen"));
-  if (!projectsSeen) {
-    projectsSeen = [];
-  }
-  if (projectsSeen.length >= projectsLength) {
-    number = projectsSeen.shift();
-  } else {
-    let isViewed;
-    do {
-      number = Math.floor(Math.random() * projectsLength);
-      isViewed =
-        projectsSeen.filter((item) => {
-          return item === number;
-        }).length > 0;
-    } while (isViewed);
+  let nextProjectIndex = 0;
+  if (currentProjectSlug) {
+    const currentProject = projects.filter(
+      (p) => p.title === currentProjectSlug
+    )[0];
+    const currentProjectIndex = projects.indexOf(currentProject);
+    if (currentProjectIndex + 1 < projectsLength) {
+      nextProjectIndex = currentProjectIndex + 1;
+    }
   }
 
-  return { number: number, title: `${projects[number].title}` };
-};
-export const saveNextProject = (number) => {
-  let projectsSeen = JSON.parse(localStorage.getItem("projectsSeen"));
-  if (!projectsSeen) {
-    projectsSeen = [];
-  }
-  projectsSeen.push(number);
-  localStorage.setItem("projectsSeen", JSON.stringify(projectsSeen));
+  return projects[nextProjectIndex];
 };

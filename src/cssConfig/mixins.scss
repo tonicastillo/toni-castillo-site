@@ -32,3 +32,10 @@
 @mixin svg-shadow{
   filter: drop-shadow(0.08em 0.08em 0.04em rgba(50,0,0,0.4));
 }
+
+@mixin font-size-vh($vh,$px) {
+  font-size: $px;
+  @media screen and (min-height: 500px){
+    font-size: $vh;
+  }
+}

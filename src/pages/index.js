@@ -3,6 +3,7 @@ import * as styles from "./index.module.scss";
 import { graphql } from "gatsby";
 import { TransitionState } from "gatsby-plugin-transition-link";
 import TLink from "../components/tLink";
+import { getNextProject } from "../helpers/goNextProject";
 
 export const query = graphql`
   query MainPageQuery {
@@ -13,14 +14,12 @@ export const query = graphql`
     }
     allNotion(
       filter: { properties: { Published: { value: { name: { eq: "Done" } } } } }
+      sort: { order: DESC, fields: properties___dataDate___value }
     ) {
       nodes {
         id
         title
         properties {
-          dataVideoPlaybackId {
-            value
-          }
           dataTitle {
             value
           }
@@ -32,6 +31,10 @@ export const query = graphql`
 const IndexPage = ({ data }) => {
   const projects = data?.allNotion.nodes;
 
+  const nextProject = getNextProject({
+    currentProjectSlug: null,
+    projects: projects,
+  });
   return (
     <>
       {/*<Seo
@@ -46,37 +49,19 @@ const IndexPage = ({ data }) => {
         {({ transitionStatus, exit, entry }) => {
           return (
             <main className={styles.main}>
-              <ul>
-                {projects &&
-                  projects.map((project) => {
-                    const id = project.id;
-                    const title = project.title;
-                    const dataTitle =
-                      project.properties.dataTitle?.value || title;
-                    return (
-                      <li key={id}>
-                        <TLink to={`${title}`}>{dataTitle}</TLink>
-                        {/*                {project.properties?.dataVideoPlaybackId?.value && (
-                  <>
-                    <h4>{project.properties.dataVideoPlaybackId.value}</h4>
-                    <h4>{project.title}</h4>
-                    <h4>{data.site.siteMetadata.muxUserId}</h4>
-                  </>
-                )}*/}
-                        {/*{project.properties?.dataVideoPlaybackId?.value && (*/}
-                        {/*  <MuxPlayer*/}
-                        {/*    streamType="on-demand"*/}
-                        {/*    playbackId={project.properties.dataVideoPlaybackId.value}*/}
-                        {/*    metadata={{*/}
-                        {/*      video_title: project.title,*/}
-                        {/*      video_user_id: muxUserId,*/}
-                        {/*    }}*/}
-                        {/*  />*/}
-                        {/*)}*/}
-                      </li>
-                    );
-                  })}
-              </ul>
+              <div className={styles.container}>
+                <h1>Toni Castillo</h1>
+                <h2>
+                  Fullstack web developer, specialising in visual experience.
+                </h2>
+                <TLink
+                  to={`/${nextProject.title}`}
+                  title={`Project ${nextProject.properties.dataTitle.value}`}
+                  className={styles.playButton}
+                >
+                  PLAY
+                </TLink>
+              </div>
             </main>
           );
         }}

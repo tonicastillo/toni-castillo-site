@@ -4,7 +4,6 @@ import "./body.scss";
 import * as styles from "./index.module.scss";
 // import { useTriggerTransition } from "gatsby-plugin-transition-link";
 // import { tTransitionProps } from "../tLink";
-import { goNextProject } from "../../helpers/goNextProject";
 import GeneralContextProvider from "../../contexts/generalContext";
 import NavPanel from "../navPanel";
 import VideoPlayer from "../videoPlayer";
@@ -26,22 +25,4 @@ const Layout = (props) => {
     </VideoPlayer.VideoContextProvider>
   );
 };
-
-// const TvDisplay = (props) => {
-//   const { projects, triggerTransition } = props;
-//   return (
-//     <div
-//       className={styles.tvDisplayContainer}
-//       onClick={() =>
-//         goNextProject({
-//           projects: projects,
-//           triggerTransition: triggerTransition,
-//         })
-//       }
-//     >
-//       Next Project
-//     </div>
-//   );
-// };
-
 export default Layout;

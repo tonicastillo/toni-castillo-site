@@ -1,13 +1,28 @@
 .main{
-  background-color: white;
-  ul{
-    display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: auto;
-      gap: 32px 32px;
-      grid-auto-flow: row;
-      grid-template-areas:
-    ". . .";
-
+  display: flex;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  height: -webkit-fill-available;
+  z-index: var(--zNavPanel);
+  justify-content: center;
+  align-items: center;
+  .container{
+    padding: 32px;
+  }
+  h1{
+    font-size: 1.4em;
+    color: var(--tColor2);
+  }
+  h2{
+    color: var(--tColor2);
+    padding-left: 0.1em;
+  }
+  .playButton{
+    margin-top: 1.6em;
+    display: inline-block;
+    padding: 0.04em 0.4em;
+    background-color: var(--tColor1);
+    color: var(--tColor2);
   }
 }

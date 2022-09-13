@@ -29,7 +29,6 @@ const VideoTimeline = () => {
           <div className={styles.nextButton}>
             <TLink
               to={`/${videoControls.status.nextProject.title}`}
-              onClick={() => videoControls.actions.saveNextProject()}
               className={styles.nextContainer}
             >
               <NextIcon />

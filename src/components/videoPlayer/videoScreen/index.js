@@ -36,7 +36,7 @@ const VideoScreen = () => {
 
   const onPlaying = () => {
     updateVideoControls("status", "isPlaying", true);
-    // onCanPlay();
+    updateVideoControls("status", "volume", videoRef.current.muted ? 0 : 1);
   };
   const onPause = () => {
     updateVideoControls("status", "isPlaying", false);
