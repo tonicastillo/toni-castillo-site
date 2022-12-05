@@ -13,7 +13,12 @@
   flex-direction: column;
   justify-content: flex-end;
 }
-
+.projectInfoContainer{
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
 .projectInfo{
   //position: absolute;
   //right: 0;

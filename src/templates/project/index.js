@@ -101,7 +101,7 @@ export const query = graphql`
 
 const ProjectTemplate = ({ data }) => {
   const generalContext = useContext(GeneralContext);
-  const { isProjectInfoOpen } = generalContext;
+  const { isProjectInfoOpen, setIsProjectInfoOpen } = generalContext;
   const videoContext = useContext(VideoContext);
   const { videoControls, setVideoData, updateVideoControls } = videoContext;
 
@@ -147,6 +147,10 @@ const ProjectTemplate = ({ data }) => {
     });
   };
 
+  const toggleProjectInfo = () => {
+    setIsProjectInfoOpen(!isProjectInfoOpen);
+  };
+
   useEffect(() => {
     initVideoData();
     updateVideoControls("events", "ended", () => goNext());
@@ -171,58 +175,75 @@ const ProjectTemplate = ({ data }) => {
             <main className={styles.main}>
               <div className={styles.panel}>
                 <div
-                  className={classNames(styles.projectInfo, {
-                    [styles.open]: isProjectInfoOpen,
-                  })}
+                  className={styles.projectInfoContainer}
+                  onClick={toggleProjectInfo}
                 >
-                  <div className={classNames(styles.titles, styles.tTitle)}>
-                    {dataDate && (
-                      <span className={styles.date}>#{dataDate}</span>
-                    )}{" "}
-                    <h2>{dataTitle}</h2>
-                  </div>
-                  <div className={classNames(styles.titles)}>
-                    <h1>{dataSubtitle}</h1>
-                  </div>
-                  {clientTitle && (
-                    <div className={classNames(styles.titles, styles.tCredits)}>
-                      {clientUrl ? (
-                        <span>
-                          For:{" "}
-                          <a href={clientUrl} target="_blank" rel="noreferrer">
-                            {clientTitle}
-                          </a>
-                        </span>
-                      ) : (
-                        <span>For: {clientTitle}</span>
-                      )}
-                    </div>
-                  )}
-                  {creditsTitle && (
-                    <div className={classNames(styles.titles, styles.tCredits)}>
-                      {creditsUrl ? (
-                        <span>
-                          With:{" "}
-                          <a href={creditsUrl} target="_blank" rel="noreferrer">
-                            {creditsTitle}
-                          </a>
-                        </span>
-                      ) : (
-                        <span>With: {creditsTitle}</span>
-                      )}
-                    </div>
-                  )}
-                  <div className={classNames(styles.titles, styles.tTags)}>
-                    {dataTags.map((tag, idx) => {
-                      const name = "#" + tag.name.replaceAll(" ", "_");
-                      const isLast = idx + 1 === dataTags.length;
-                      return (
-                        <span key={idx}>
-                          {name}
-                          {!isLast && ", "}
-                        </span>
-                      );
+                  <div
+                    className={classNames(styles.projectInfo, {
+                      [styles.open]: isProjectInfoOpen,
                     })}
+                  >
+                    <div className={classNames(styles.titles, styles.tTitle)}>
+                      {dataDate && (
+                        <span className={styles.date}>#{dataDate}</span>
+                      )}{" "}
+                      <h2>{dataTitle}</h2>
+                    </div>
+                    <div className={classNames(styles.titles)}>
+                      <h1>{dataSubtitle}</h1>
+                    </div>
+                    {clientTitle && (
+                      <div
+                        className={classNames(styles.titles, styles.tCredits)}
+                      >
+                        {clientUrl ? (
+                          <span>
+                            For:{" "}
+                            <a
+                              href={clientUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {clientTitle}
+                            </a>
+                          </span>
+                        ) : (
+                          <span>For: {clientTitle}</span>
+                        )}
+                      </div>
+                    )}
+                    {creditsTitle && (
+                      <div
+                        className={classNames(styles.titles, styles.tCredits)}
+                      >
+                        {creditsUrl ? (
+                          <span>
+                            With:{" "}
+                            <a
+                              href={creditsUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {creditsTitle}
+                            </a>
+                          </span>
+                        ) : (
+                          <span>With: {creditsTitle}</span>
+                        )}
+                      </div>
+                    )}
+                    <div className={classNames(styles.titles, styles.tTags)}>
+                      {dataTags.map((tag, idx) => {
+                        const name = "#" + tag.name.replaceAll(" ", "_");
+                        const isLast = idx + 1 === dataTags.length;
+                        return (
+                          <span key={idx}>
+                            {name}
+                            {!isLast && ", "}
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
                 <VideoPlayer.VideoTimeline />

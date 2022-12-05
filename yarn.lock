@@ -2024,21 +2024,21 @@
   resolved "https://registry.yarnpkg.com/@msgpackr-extract/msgpackr-extract-win32-x64/-/msgpackr-extract-win32-x64-2.1.2.tgz#f2d8b9ddd8d191205ed26ce54aba3dfc5ae3e7c9"
   integrity sha512-rIZVR48zA8hGkHIK7ED6+ZiXsjRCcAVBJbm8o89OKAMTmEAQ2QvoOxoiu3w2isAaWwzgtQIOFIqHwvZDyLKCvw==
 
-"@mux/mux-video-react@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@mux/mux-video-react/-/mux-video-react-0.5.1.tgz#b6208013498537d0fb86cadfe3a2055a75b3be80"
-  integrity sha512-a8OjZJmRW9TY/te8RF1LGdy7Kfj4tCRXVuuPP54hFjT+IyfXttoJq4huZfG/mR6DpeZTWS7VFD7lUZmXqiQlXA==
+"@mux/mux-video-react@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@mux/mux-video-react/-/mux-video-react-0.7.1.tgz#d3cca49dcc8aac2763b2702d08ef33c1db2ef48a"
+  integrity sha512-QkUvUolT981JpeUHXNDQ3RL4ns1xwicrtBwdcyF9JHBgtBH4P38bsOC2GxEkuQXPTqgKzLNcqL0tgIPtzWXALQ==
   dependencies:
-    "@mux/playback-core" "0.9.0"
+    "@mux/playback-core" "0.14.0"
     prop-types "^15.7.2"
 
-"@mux/playback-core@0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@mux/playback-core/-/playback-core-0.9.0.tgz#4cb6f7189c49f123b490bd08ad790f12a73c4869"
-  integrity sha512-wy39NFM+jjmHzs206BKG3vaBxdv7rVwL+HGOb13tMRCItMFXJoNtstYoiaDIEBYwcUUsgWgIBPUXPBwTXm4Now==
+"@mux/playback-core@0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@mux/playback-core/-/playback-core-0.14.0.tgz#62a74b83dadcc97a02a5dfa96fa62ba50ace4026"
+  integrity sha512-sE2vMI704DF+bnWhGspy9LY8MYl/Rbh+h6x3AwXI9G6zRRr0noiQ2b2dIbPNKopKouVTI2impytY27nYpR97Rw==
   dependencies:
-    hls.js "1.1.5"
-    mux-embed "^4.7.0"
+    hls.js "1.2.3"
+    mux-embed "^4.14.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -7349,10 +7349,10 @@ header-case@^2.0.4:
     capital-case "^1.0.4"
     tslib "^2.0.3"
 
-hls.js@1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.1.5.tgz#923a8a8cfdf09542578696d47c8ae435da981ffd"
-  integrity sha512-mQX5TSNtJEzGo5HPpvcQgCu+BWoKDQM6YYtg/KbgWkmVAcqOCvSTi0SuqG2ZJLXxIzdnFcKU2z7Mrw/YQWhPOA==
+hls.js@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.2.3.tgz#9b9e5d5b05c4912dacec173962694b710eea33ac"
+  integrity sha512-CC/vHi82ldiiydIhliNI3whlcepRXxI2jdpd/KKb6lyEv+74e7lXs4cGk5PHfTLxZMKOj6+m5LX9VAbvV/r7AQ==
 
 hosted-git-info@^3.0.8:
   version "3.0.8"
@@ -8922,10 +8922,10 @@ mute-stream@0.0.8, mute-stream@~0.0.4:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-mux-embed@^4.7.0:
-  version "4.12.1"
-  resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-4.12.1.tgz#09a018d4d39a97334c68ce833da0d45894148fc9"
-  integrity sha512-K+OUPilLx0jXnqzEVm6RL20xAFnpsGRQIqRcxlDUeHTckKIDa8OnCJJoiY2gHZhyepdrNTKLF+IrftfYNBpw4A==
+mux-embed@^4.14.0:
+  version "4.15.0"
+  resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-4.15.0.tgz#634d081b61e19ad9f672ed721a0e72cabdad128e"
+  integrity sha512-eYlZmSkfc2xf+k2aWaPHLeh81wtPQsWxRMob0YoUyBCEX1iuJhPKpJE+9C8ASY+LrE+Z44K306rbg8a5oPCrjg==
 
 nanoid@^3.3.4:
   version "3.3.4"

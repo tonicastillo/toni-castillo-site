@@ -79,6 +79,9 @@
       }
     }
     .volume{
+      @media screen and (max-width: 499px){
+        display: none;
+      }
       .speakerContainer{
         display: flex;
         height: 100%;
@@ -96,6 +99,9 @@
     .numbers{
       padding: var(--text-block-padding);
       color: var(--tColor2);
+      @media screen and (max-width: 499px){
+        display: none;
+      }
     }
   }
 }
