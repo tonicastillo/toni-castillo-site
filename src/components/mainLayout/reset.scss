@@ -16,7 +16,7 @@ div:focus{
 //BETA ALERT
 body::before{
     display: block;
-    @media screen and (min-height: 500px){
+    @media screen and (min-width: 500px){
         display: none;
     }
     content: "BETA: Not working on mobile devices";
